@@ -176,9 +176,10 @@ function updateDashboard() {
     let lushGiven = 0;
     let dewberryGiven = 0;
 
-    // คำนวณหาว่าในจำนวนการหมุนปัจจุบัน (dbTotalSpins) ได้จ่ายอะไรไปแล้วบ้าง
-    for (let i = 0; i < dbTotalSpins; i++) {
-        let roundIndex = i % 100;
+    // ใช้ค่าในรอบปัจจุบันทุกครั้ง เมื่อครบ 100 รอบให้รีเซ็ตและเริ่มนับใหม่สำหรับรอบถัดไป
+    const cycleSpins = dbTotalSpins > 0 ? (dbTotalSpins % 100 || 100) : 0;
+    for (let i = 0; i < cycleSpins; i++) {
+        const roundIndex = i % 100;
         // ใช้ตรรกะสลับเศษเดียวกันกับหน้าวงล้อเพื่อหักสต็อกให้ตรงกันเป๊ะ
         if (roundIndex % 5 === 0) {
             lactasoyGiven++;
@@ -222,7 +223,7 @@ let availableOrderRanges = [100];
 
 function getDisplaySlotNumber(slotNumber) {
     const normalizedSlot = parseInt(slotNumber, 10) || 1;
-    return normalizedSlot + (dbTotalSpins >= 100 ? 100 : 0);
+    return normalizedSlot + getOrderRangeOffset();
 }
 
 function syncOrderRangeWithSpinCount() {
@@ -276,12 +277,18 @@ function getOrderRangeBounds(range) {
     return { start, end: range };
 }
 
+function getOrderRangeOffset() {
+    const normalizedTotal = Math.max(0, parseInt(dbTotalSpins, 10) || 0);
+    return Math.floor(normalizedTotal / 100) * 100;
+}
+
 function updateOrderRangeControls() {
     const title = document.querySelector('.order-container h3');
     const info = document.querySelector('.order-info');
     const tabsContainer = document.getElementById('order-range-tabs');
-    const displayStart = dbTotalSpins >= 100 ? 101 : 1;
-    const displayEnd = dbTotalSpins >= 100 ? 200 : 100;
+    const offset = getOrderRangeOffset();
+    const displayStart = offset + 1;
+    const displayEnd = offset + 100;
 
     if (title) {
         title.textContent = `🧩 กำหนดลำดับรางวัลในช่วง ${displayStart}–${displayEnd}`;
