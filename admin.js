@@ -217,9 +217,6 @@ function updateDashboard() {
 }
 
 
-
-
-
 // เก็บข้อมูลลำดับรางวัลสำหรับ 100 ช่องที่ใช้ซ้ำทุก 100 ครั้ง
 let selectedOrders = {};
 let currentActiveSlot = null;
