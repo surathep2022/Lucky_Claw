@@ -32,6 +32,7 @@ let dbStock = {};
 let dbTotalSpins = 0;
 let dbHistory = [];
 let dbNextQueue = {}; // เก็บข้อมูลคิวรอบถัดไป
+let dbSponsors = []; // ข้อมูลสปอนเซอร์จาก Firebase
 
 // 2. --- Initialization UI ---
 /**
@@ -212,7 +213,11 @@ function updateDashboard() {
     }
 
     renderHistoryTable(dbHistory);
+    renderSponsors();
 }
+
+
+
 
 
 // เก็บข้อมูลลำดับรางวัลสำหรับ 100 ช่องที่ใช้ซ้ำทุก 100 ครั้ง
@@ -300,6 +305,22 @@ function updateOrderRangeControls() {
 
     if (tabsContainer) {
         tabsContainer.innerHTML = '';
+    }
+}
+
+function toggleOrderContent() {
+    const content = document.getElementById('order-content');
+    const button = document.getElementById('toggle-order-btn');
+    if (!content || !button) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? '' : 'none';
+    button.setAttribute('aria-expanded', String(isHidden));
+
+    const icon = button.querySelector('i');
+    if (icon) {
+        icon.classList.toggle('fa-chevron-down', isHidden);
+        icon.classList.toggle('fa-chevron-up', !isHidden);
     }
 }
 
@@ -716,6 +737,9 @@ db.ref().on('value', (snapshot) => {
     dbStock = data.currentStock || {};
     dbTotalSpins = parseInt(data.totalSpins || 0);
     dbNextQueue = data.nextRoundQueue || {};
+    dbSponsors = Array.isArray(data.sponsors)
+        ? data.sponsors.filter(item => item && item.name)
+        : Object.keys(data.sponsors || {}).map(key => ({ ...data.sponsors[key], id: key }));
     
     const historyObj = data.prizeHistory || {};
     dbHistory = Object.keys(historyObj).map(key => historyObj[key]);

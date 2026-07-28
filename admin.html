@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -78,17 +79,22 @@
     </div>
         
 
-    <div class="order-container">
+    <div class="order-container" id="order-container">
         <div class="order-header">
             <h3>🧩 กำหนดลำดับรางวัลในรอบ 100 ครั้ง</h3>
+            <button type="button" id="toggle-order-btn" onclick="toggleOrderContent()" aria-expanded="true" title="ซ่อน/แสดง ลำดับรางวัล">
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
         </div>
-        <p class="order-info">คลิกแต่ละช่องเพื่อเลือกของรางวัลสำหรับลำดับที่ 100 ก่อนเริ่มหมุน</p>
-        <div class="order-range-tabs" id="order-range-tabs"></div>
-        <div id="order-grid" class="order-grid"></div>
+        <div id="order-content">
+            <p class="order-info">คลิกแต่ละช่องเพื่อเลือกของรางวัลสำหรับลำดับที่ 100 ก่อนเริ่มหมุน</p>
+            <div class="order-range-tabs" id="order-range-tabs"></div>
+            <div id="order-grid" class="order-grid"></div>
             <div class="order-actions">
                 <button class="btn-save" onclick="savePrizeOrder()">💾 บันทึกลำดับรางวัล</button>
                 <button class="btn-reset" onclick="clearAllOrders()">🧹 ล้างลำดับทั้งหมด</button>
             </div>
+        </div>
     </div>
 
     <div class="inventory-section">
@@ -124,6 +130,10 @@
                     <img src="dewberry.png" alt="ดิวเบอร์รี่">
                 </div>
                 <span class="sponsor-stock">คงเหลือ: <strong id="stock-dewberry">20</strong> ชิ้น</span>
+            </div>
+
+            <div class="add_sponser-card">
+                
             </div>
 
 
