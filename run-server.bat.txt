@@ -1,0 +1,24 @@
+@echo off
+:: กำหนดให้ใช้งาน UTF-8 เพื่อรองรับภาษาไทยใน CMD
+chcp 65001 > nul
+title Running Lucky Wheel Project with Ngrok...
+
+echo ===================================================
+echo   [SUCCESS] Starting HTTP Server and Ngrok...
+echo ===================================================
+
+:: 1. สั่งรัน http-server แยกออกไปอีกหน้าต่าง (Port 8080)
+start "HTTP Server Backend" cmd /k "http-server -p 8080"
+
+:: 2. สั่งรัน ngrok สร้าง Tunnel ลิงก์ออนไลน์ไปยัง Port 8080
+start "Ngrok Online Tunnel" cmd /k "ngrok http 8080"
+
+:: 3. เปิด Web Browser เพื่อดูหน้าเว็บ Localhost
+start chrome http://localhost:8080
+
+echo ---------------------------------------------------
+echo  [READY] ระบบกำลังเริ่มทำงาน...
+echo  - หน้าต่างที่ 1: HTTP Server (Local Server Port 8080)
+echo  - หน้าต่างที่ 2: Ngrok Tunnel (คัดลอกลิงก์ https://... ไปใช้งาน)
+echo ---------------------------------------------------
+pause

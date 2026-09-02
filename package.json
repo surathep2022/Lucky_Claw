@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+  "start": "node server.js", 
+  "ngrok": "node start-ngrok.js",
+  "dev:share": "concurrently \"npm start\" \"npm run ngrok\""
   },
   "keywords": [],
   "author": "",
@@ -14,5 +16,9 @@
     "@lottiefiles/dotlottie-web": "^0.80.0",
     "dotlottie-player": "^2.5.6",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "ngrok": "^5.0.0-beta.2"
   }
 }
