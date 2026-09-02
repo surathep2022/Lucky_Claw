@@ -5,21 +5,32 @@
 // 1. --- Configuration & Global Variables ---
 const prizes = [  
 
-    { name: "ร่มตอนเดียว", image: "1.png" },   
-    { name: "แก้วเก็บความเย็น", image: "2.png" }, 
-    { name: "หมอนรองคอ", image: "3.png" },
-    { name: "แก้วชงชากาแฟ", image: "4.png" },
-    { name: "กระเป๋าช้อปปิ้ง", image: "5.png" },
-    { name: "กระบอกน้ำ", image: "6.png" },
-    { name: "ชุดถนอมอาหาร", image: "7.png" },
-    { name: "กระบอกแก้ว", image: "8.png" },
-    { name: "กล่องผ้าเก็บของ", image: "9.png" },
-    { name: "ถุงผ้าเก็บของ", image: "10.png" }, 
-    { name: "แก้วน้ำปาร์ตี้", image: "11.png" }, 
-    { name: "เครื่องเตรียมอาหาร", image: "12.png" },
-    { name: "เครื่องดูดฝุ่น", image: "13.png" },
-    { name: "เครื่องปั้นน้ำผลไม้", image: "14.png" },
-    { name: "เครื่องผลไม้ปั่น", image: "15.png" },    
+
+    { name: "ร่มตอนเดียว", image: "gift/1.png" },  
+    { name: "กระเป๋าช้อปปิ้ง", image: "gift/5.png" },
+    { name: "กระเป๋าลายสัตว์", image: "gift/21.png" },
+    { name: "แก้วเก็บความเย็น", image: "gift/20.png" },
+    { name: "แก้วน้ำปาร์ตี้", image: "gift/11.png" },
+    
+    { name: "เครื่องผลไม้ปั่น", image: "gift/15.png" }, 
+    { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
+    { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
+    { name: "เครื่องจำกัดไรฝุ่น", image: "gift/18.png"},
+    { name: "เครื่องบดเนื้อ", image: "gift/19.png" },
+    { name: "เครื่องเตรียมอาหาร", image: "gift/12.png" },
+    { name: "หม้อทอดไร้น้ำมัน", image: "gift/16.png" },
+    { name: "เครื่องดูดฝุ่น", image: "gift/13.png" }, 
+
+
+    // { name: "แก้วเก็บความเย็น", image: "gift/2.png" }, 
+    // { name: "หมอนรองคอ", image: "gift/3.png" },
+    // { name: "แก้วชงชากาแฟ", image: "gift/4.png" },    
+    // { name: "กระบอกน้ำ", image: "gift/6.png" },
+    // { name: "ชุดถนอมอาหาร", image: "gift/7.png" },
+    // { name: "กระบอกแก้ว", image: "gift/8.png" },
+    // { name: "กล่องผ้าเก็บของ", image: "gift/9.png" },
+    // { name: "ถุงผ้าเก็บของ", image: "gift/10.png" }, 
+
 ];
 
 let currentPage = 1;
@@ -167,15 +178,15 @@ function updateDashboard() {
     document.getElementById('total-left-display').textContent = totalLeft;
    // อัปเดตจำนวนคงเหลือของผู้สนับสนุน (Lactasoy 20 / Lush 40 / Dewberry 40)
    
-    const stockLush = document.getElementById('stock-lush');
+    const stockDynamite = document.getElementById('stock-dynamite');
     const stockLactasoy = document.getElementById('stock-lactasoy');
-    const stockDewberry = document.getElementById('stock-dewberry')
+    const stockBlueberry = document.getElementById('stock-blueberry')
 
 
     // ตรรกะคำนวณจำนวนที่แจกไปแล้วแบบเฉลี่ยสลับตามรอบ (dbTotalSpins)
     let lactasoyGiven = 0;
-    let lushGiven = 0;
-    let dewberryGiven = 0;
+    let dynamiteGiven = 0;
+    let blueberryGiven = 0;
 
     // ใช้ค่าในรอบปัจจุบันทุกครั้ง เมื่อครบ 100 รอบให้รีเซ็ตและเริ่มนับใหม่สำหรับรอบถัดไป
     const cycleSpins = dbTotalSpins > 0 ? (dbTotalSpins % 100 || 100) : 0;
@@ -185,21 +196,21 @@ function updateDashboard() {
         if (roundIndex % 5 === 0) {
             lactasoyGiven++;
         } else if (roundIndex % 2 === 1) {
-            lushGiven++;
+            dynamiteGiven++;
         } else {
-            dewberryGiven++;
+            blueberryGiven++;
         }
     }
 
     // จำกัดขีดจำกัดสูงสุดเพื่อความปลอดภัยไม่ให้ค่าติดลบ
-    lactasoyGiven = Math.min(20, lactasoyGiven);
-    lushGiven = Math.min(60, lushGiven);
-    dewberryGiven = Math.min(20, dewberryGiven);
-
-    // อัปเดตตัวเลขแสดงผลบนหน้าจอ Admin Dashboard
-    if (stockLactasoy) stockLactasoy.textContent = 20 - lactasoyGiven;
-    if (stockLush) stockLush.textContent = 60 - lushGiven;
-    if (stockDewberry) stockDewberry.textContent = 20 - dewberryGiven;
+    lactasoyGiven = Math.min(25, lactasoyGiven);
+    dynamiteGiven = Math.min(40, dynamiteGiven);
+    blueberryGiven = Math.min(35, blueberryGiven);
+   
+    // อัปเดตตัวเลขคงเหลือแสดงผลบนหน้าจอ Admin Dashboard
+    if (stockLactasoy) stockLactasoy.textContent = 25 - lactasoyGiven;
+    if (stockDynamite) stockDynamite.textContent = 40 - dynamiteGiven;
+    if (stockBlueberry) stockBlueberry.textContent = 35 - blueberryGiven;
 
     // อัปเดตคิวลูกค้า
     const queueDiv = document.getElementById('current-queue-list');
@@ -610,30 +621,43 @@ function renderHistoryTable(data) {
     if (currentPage > totalPages) currentPage = totalPages;
 
     const start = (currentPage - 1) * rowsPerPage;
+
+    // เรียงลำดับจากเก่าไปใหม่ (หรือเปลี่ยนเป็น tb - ta หากต้องการให้รายการใหม่อยู่บนสุด)
     const sortedData = [...data].sort((a, b) => {
         const ta = parseInt(a.timestamp) || 0;
         const tb = parseInt(b.timestamp) || 0;
         return ta - tb;
     });
+
     const paginatedData = sortedData.slice(start, start + rowsPerPage);
 
+    // วาด Row ตาราง
     tableBody.innerHTML = paginatedData.length ? paginatedData.map((item, i) => {
+        // หาไอคอนรูปภาพของรางวัล
         const prizeInfo = prizes.find(p => p.name === item.prize);
         const prizeDisplay = prizeInfo ?
             `<span class="prize-badge"><img src="${prizeInfo.image}" alt="${item.prize}" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;">${item.prize}</span>` :
-            `<span class="prize-badge">${item.prize}</span>`;
+            `<span class="prize-badge">${item.prize || '-'}</span>`;
+
+        // ดึงค่า Field ให้ตรงกับที่บันทึกในระบบ
+        const rawOrder = item.orderNo || (start + i + 1);
+        const orderDisplay = Math.max(1, rawOrder - 1); // หรือใส่ rawOrder - 1 ตรงๆ ได้ครับ
+        const customerName = item.playerName || item.customer || 'ไม่ระบุชื่อ';
+        const specialPrizeDisplay = item.specialPrize || '-';
+        const timeDisplay = item.datetime || item.time || '-';
 
         return `
         <tr>
-            <td>${start + i + 1}</td>
-            <td><b>${item.customer}</b></td>
+            <td><b>${orderDisplay}</b></td>
+            <td><b>${customerName}</b></td>
             <td>${prizeDisplay}</td>
-            <td>${item.specialPrize || '-'}</td>
-            <td style="font-family: monospace;">${item.time}</td>
+            <td><span class="special-prize-badge">${specialPrizeDisplay}</span></td>
+            <td style="font-family: monospace;">${timeDisplay}</td>
         </tr>
     `;
-    }).join('') : `<tr><td colspan="5" style="text-align:center;">ยังไม่มีข้อมูล</td></tr>`;
+    }).join('') : `<tr><td colspan="5" style="text-align:center;">ยังไม่มีข้อมูลผู้โชคดี</td></tr>`;
 
+    // สร้างปุ่ม Pagination
     let html = `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&laquo;</button>`;
     for (let i = 1; i <= totalPages; i++) {
         html += `<button class="${currentPage === i ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
@@ -648,14 +672,19 @@ function changePage(page) {
 }
 
 function exportToExcel() {
-    if (!dbHistory.length) return Swal.fire('ไม่มีข้อมูล', '', 'info');
-    const worksheet = XLSX.utils.json_to_sheet(dbHistory.map((item, i) => ({
-        "ลำดับ": i + 1,
-        "ชื่อลูกค้า": item.customer,
-        "รางวัล": item.prize,
-        "รางวัลพิเศษ": item.specialPrize || '-',
-        "เวลา": item.time
-    })));
+    if (!dbHistory.length) return Swal.fire('ไม่มีข้อมูล', 'ยังไม่มีรายการประวัติผู้ได้รับรางวัล', 'info');
+    
+    const worksheet = XLSX.utils.json_to_sheet(dbHistory.map((item, i) => {
+        const rawOrder = item.orderNo || (i + 1);
+        return {
+            "ลำดับ": rawOrder - 1, // 🎯 ลบ 1 ออกสำหรับไฟล์ Excel
+            "ชื่อลูกค้า": item.playerName || item.customer || 'ไม่ระบุชื่อ',
+            "รางวัลที่ได้รับ": item.prize || '-',
+            "รางวัลพิเศษ": item.specialPrize || '-',
+            "วัน/เดือน/ปี เวลา": item.datetime || item.time || '-'
+        };
+    }));
+    
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Winners");
     XLSX.writeFile(workbook, `รายชื่อผู้โชคดี_Firebase.xlsx`);
@@ -738,8 +767,11 @@ db.ref().on('value', (snapshot) => {
         ? data.sponsors.filter(item => item && item.name)
         : Object.keys(data.sponsors || {}).map(key => ({ ...data.sponsors[key], id: key }));
     
-    const historyObj = data.prizeHistory || {};
-    dbHistory = Object.keys(historyObj).map(key => historyObj[key]);
+    const historyObj = data.history || data.prizeHistory || {};
+    dbHistory = Object.keys(historyObj).map(key => ({
+        id: key,
+        ...historyObj[key]
+    }));
 
     loadOrderRangeState(data.prizeOrderConfig || null);
     loadPrizeOrderFromFirebase(data.prizeOrder || {});
