@@ -111,84 +111,117 @@
             { name: "เครื่องดูดฝุ่น", image: "gift/13.png" },   
         ];
 
-        const BOX_COLORS = ["c1", "c2", "c3", "c4", "c5", "c6"];
+        const BOX_COLORS = ["black", "blue", "gold", "mint", "pink", "red", "bright_blue", "rainbow", "white"];
+
         const BOX_DEFS = [
+          // แถวบน 
           {
-            x: 20,
-            y: 62,
-            color: "c1",
-            prize: { name: prizes[0].name, image: prizes[0].image, type: "product" },
-          },
-          {
-            x: 33,
-            y: 52,
-            color: "c3",
-            prize: { name: prizes[1].name, image: prizes[1].image, type: "product" },
+            x: 15,
+            y: 10,
+            color: "black",
+            image: "gift_box/black_gift.png",
+            prize: {
+              name: prizes[0].name,
+              image: prizes[0].image,
+              type: "product"
+            },
           },
           {
             x: 50,
-            y: 44,
-            color: "c5",
-            prize: { name: prizes[2].name, image: prizes[2].image, type: "product" },
-          },
-          {
-            x: 64,
-            y: 52,
-            color: "c2",
-            prize: { name: prizes[3].name, image: prizes[3].image, type: "product" },
+            y: 10,
+            color: "gold",
+            image: "gift_box/gold_gift.png",
+            prize: {
+              name: prizes[2].name,
+              image: prizes[2].image,
+              type: "product"
+            },
           },
           {
             x: 78,
-            y: 46,
-            color: "c4",
-            prize: { name: prizes[4].name, image: prizes[4].image, type: "product" },
+            y: 10,
+            color: "pink",
+            image: "gift_box/pink_gift.png",
+            prize: {
+              name: prizes[4].name,
+              image: prizes[4].image,
+              type: "product"
+            },
           },
+           // แถวกลาง
           {
-            x: 90,
-            y: 58,
-            color: "c6",
-            prize: { name: prizes[5].name, image: prizes[5].image, type: "product" },
+            x: 35,
+            y: 45,
+            color: "blue",
+            image: "gift_box/blue_gift.png",
+            prize: {
+              name: prizes[1].name,
+              image: prizes[1].image,
+              type: "product"
+            },
           },
+          
           {
-            x: 44,
-            y: 34,
-            color: "c2",
-            prize: { name: prizes[6].name, image: prizes[6].image, type: "product" },
+            x: 65,
+            y: 45,
+            color: "mint",
+            image: "gift_box/mint_gift.png",
+            prize: {
+              name: prizes[3].name,
+              image: prizes[3].image,
+              type: "product"
+            },
           },
+          
           {
-            x: 68,
-            y: 70,
-            color: "c5",
-            prize: { name: prizes[7].name, image: prizes[7].image, type: "product" },
+            x: 95,
+            y: 45,
+            color: "red",
+            image: "gift_box/red_gift.png",
+            prize: {
+              name: prizes[5].name,
+              image: prizes[5].image,
+              type: "product"
+            },
           },
+          // แถวล่าง
           {
-            x: 26,
-            y: 44,
-            color: "c4",
-            prize: { name: prizes[8].name, image: prizes[8].image, type: "product" },
+            x: 78,
+            y: 78,
+            color: "white",
+            image: "gift_box/white_gift.png",
+            prize: {
+              name: prizes[5].name,
+              image: prizes[5].image,
+              type: "product"
+            },
           },
-          {
-            x: 55,
-            y: 76,
-            color: "c1",
-            prize: { name: prizes[9].name, image: prizes[9].image, type: "product" },
+             {
+            x: 50,
+            y: 78,
+            color: "rainbow",
+            image: "gift_box/rainbow_gift.png",
+            prize: {
+              name: prizes[5].name,
+              image: prizes[5].image,
+              type: "product"
+            },
           },
-          {
-            x: 14,
-            y: 48,
-            color: "c6",
-            prize: { name: prizes[10].name, image: prizes[10].image, type: "product" },
-          },
-          {
-            x: 84,
-            y: 74,
-            color: "c3",
-            prize: { name: prizes[11].name, image: prizes[11].image, type: "product" },
+             {
+            x: 25,
+            y: 78,
+            color: "bright_blue",
+            image: "gift_box/bright_blue_gift.png",
+            prize: {
+              name: prizes[5].name,
+              image: prizes[5].image,
+              type: "product"
+            },
           },
         ];
 
-        const GIFT_IMAGE_PATH = "/Gift.png";
-        const REVEAL_IMAGE_PATH = "/Gifi_poen.png";
+        
+        const REVEAL_IMAGE_PATH = "/Gift_open.gif";
 
         const soundMap = {
           play: new Audio('/play.mp3'),
@@ -213,33 +246,58 @@
           audio.play().catch(() => {});
         }
 
-        function createGiftImage({ width = 100, height = 100, src = GIFT_IMAGE_PATH } = {}) {
+        function createGiftImage({
+          width = 100,
+          height = 100, 
+          src
+        } = {}) {
           const img = document.createElement('img');
+
           img.src = src;
           img.alt = 'gift';
+
           img.width = width;
           img.height = height;
-          img.style.width = '100%';
-          img.style.height = '100%';
+
+          img.style.width = '150%';
+          img.style.height = '150%';
           img.style.objectFit = 'contain';
           img.style.display = 'block';
           img.style.pointerEvents = 'none';
+
           return img;
         }
 
         function makeBoxEl(def) {
-            const el = document.createElement('div');
-            el.className = 'giftbox';
-            el.style.left = def.x + '%';
-            el.style.top = def.y + '%';
-            el.style.setProperty('--s', (0.85 + Math.random() * 0.35).toFixed(2));
-            el.style.setProperty('--gift-shift', `${(Math.random() - 0.5) * 10}px`);
+          const el = document.createElement('div');
 
-            const img = createGiftImage({ width: 120, height: 120 });
-            img.style.transform = 'translateX(var(--gift-shift))';
-            img.style.transition = 'transform 0.6s ease-in-out';
-            el.appendChild(img);
-            return el;
+          el.className = 'giftbox';
+
+          el.style.left = def.x + '%';
+          el.style.top = def.y + '%';
+
+          el.style.setProperty(
+            '--s',
+            (0.85 + Math.random() * 0.35).toFixed(2)
+          );
+
+          el.style.setProperty(
+            '--gift-shift',
+            `${(Math.random() - 0.5) * 10}px`
+          );
+
+          const img = createGiftImage({
+            width: 120,
+            height: 120,
+            src: def.image
+          });
+
+          img.style.transform = 'translateX(var(--gift-shift))';
+          img.style.transition = 'transform 0.6s ease-in-out';
+
+          el.appendChild(img);
+
+          return el;
         }
         let prizeElements = [];
         function resetPrizeField() {
@@ -259,7 +317,7 @@
           depth: 0, // 0-100 -> maps to reach depth into field
           busy: false,
           timeLeft: 15,
-          credit: 20,
+          credit: 500,
           stars: 20,
           teddy: 0,
           gift: 0,
@@ -305,6 +363,55 @@
         }
         renderMotor();
         updateHUD();
+
+        function findNearestGiftToClaw() {
+          const clawRect = clawEl.getBoundingClientRect();
+          const clawY = clawRect.top + clawRect.height / 2;
+
+          let candidateBoxes = [];
+
+          prizeElements.forEach((p) => {
+            if (!p.el) return;
+            if (p.el.style.opacity === "0") return; // ข้ามกล่องที่คีบไปแล้ว
+
+            const boxRect = p.el.getBoundingClientRect();
+            const boxY = boxRect.top + boxRect.height / 2;
+
+            // 1. คำนวณระยะห่างแกน X เป็น % จากตำแหน่งของรางคีบกับตัวกล่องโดยตรง
+            const dxPct = Math.abs(state.clawXPct - p.x);
+
+            // 2. เช็กว่าหัวคีบเล็งตรงกล่อง (ไม่เกิน 12%) และหย่อนลงมาถึงระดับความสูงของกล่องนั้นแล้ว
+            if (dxPct <= 12 && boxY <= clawY + 50) {
+              candidateBoxes.push({
+                prize: p,
+                dxPct: dxPct,
+                y: p.y
+              });
+            }
+          });
+
+          if (candidateBoxes.length === 0) return null;
+
+          // 🎯 ปรับ Logic: เรียงจาก y มากไปน้อย (b.y - a.y)
+          // หากหัวคีบหย่อนลงมาถึงแถวกลาง (y: 45) จะเลือกกล่องแถวกลางแทนกล่องแถวบน (y: 10) ทันที
+          candidateBoxes.sort((a, b) => {
+            if (a.y !== b.y) {
+              return b.y - a.y; // เลือกกล่องที่อยู่ลึกที่สุดที่หัวคีบหย่อนลงไปถึง
+            }
+            return a.dxPct - b.dxPct; // ถ้าอยู่แถวเดียวกัน ให้เลือกกล่องที่ตรงกลางที่สุด
+          });
+
+          const nearest = candidateBoxes[0].prize;
+
+          console.log(
+            "🎯 คีบสำเร็จ (เลือกกล่องลึกสุดที่ลงไปถึง):",
+            nearest?.color,
+            "พิกัด Y:",
+            nearest?.y
+          );
+
+          return nearest;
+        }
 
         // ---------------- phase state machine ----------------
         let phase = "locked";
@@ -513,6 +620,7 @@
         // ---------------- grab sequence ----------------
         async function triggerGrab() {
           if (phase !== "selecting") return;
+
           if (state.credit <= 0) {
             stopTimer();
             showOut();
@@ -527,53 +635,119 @@
           phase = "busy";
           stopTimer();
           setHint("กำลังคีบกล่องของขวัญ...");
+
           state.credit -= 1;
           updateHUD();
-
+          
+          // ตำแหน่งหัวคีบ
           const reachX = state.clawXPct;
-          const reachY = 30 + (state.depth / 100) * 65;
-
+          const reachY = 25 + (state.depth / 100) * 60;
+          
+          // หัวคีบลงไปด้านล่าง
           rod.style.height = ROD_MAX + "px";
+
           await wait(600);
 
-          let nearest = null,
-            nearestDist = Infinity;
-          prizeElements.forEach((p) => {
-            const dx = p.x - reachX;
-            const dy = p.y - reachY;
-            const d = Math.sqrt(dx * dx + dy * dy);
-            if (d < nearestDist) {
-              nearestDist = d;
-              nearest = p;
-            }
-          });
-          const caught = nearest;
+          // ==========================================
+          
+          // ==========================================
+          // ถ้าไม่พบกล่อง
+          // ==========================================
 
-          playSound("keep");
+        const caught = findNearestGiftToClaw();
+
+        if (!caught) {
+          console.log("ไม่พบกล่อง");
+
           clawEl.classList.add("closed");
+
           await wait(320);
 
+          clawEl.classList.remove("closed");
+
+          rod.style.height = ROD_REST + "px";
+
+          await wait(600);
+
+          state.clawXPct = 50;
+          state.depth = 0;
+
+          renderMotor();
+
+          updateHUD();
+
+          phase = "selecting";
+
+          setHint("ลองใหม่อีกครั้ง");
+
+          return;
+}
+          // ==========================================
+          // ⭐ กล่องที่ใกล้หัวคีบที่สุด
+          // ==========================================
+                  
+         
+          console.log(
+            "🎁 คีบกล่อง:",
+            caught.color,
+            caught.image,           
+          );
+
+          playSound("keep");
+
+          clawEl.classList.add("closed");
+
+          await wait(320);
+
+          // ==========================================
+          // ซ่อนกล่องจริง
+          // ==========================================
+
           caught.el.style.opacity = "0";
+          // ==========================================
+          // ⭐ แสดงรูปกล่องที่ถูกคีบ
+          // ==========================================
           // ตอนที่เล็บคีบจับกล่องได้ (ในฟังก์ชัน triggerGrab)
-          const miniGift = createGiftImage({ width: 60, height: 60 });
+          // ตอนที่เล็บคีบจับกล่องได้ (ในฟังก์ชัน triggerGrab)
+          const miniGift = createGiftImage({ 
+            width: 60, 
+            height: 60, 
+            src: caught.image // 🟢 ใส่ src เพื่อส่งรูปกล่อง (เช่น "gift_box/black_gift.png") ไปแสดงผล
+          });
           miniGift.style.width = "60px";
           miniGift.style.height = "60px";
           miniGift.style.objectFit = "contain";
+
           heldPrizeEl.innerHTML = "";
           heldPrizeEl.appendChild(miniGift);
           heldPrizeEl.classList.add("show");
+
+           // เอากล่องออกจากรายการที่สามารถคีบได้
           prizeElements = prizeElements.filter((p) => p.id !== caught.id);
 
+          // ==========================================
+          // ยกกล่องขึ้น
+          // ==========================================
           rod.style.height = ROD_REST + "px";
           await wait(600);
 
+          // ==========================================
+          // เคลื่อนหัวคีบไปช่องรับรางวัล
+          // ==========================================
+
           state.clawXPct = RAIL_MIN;
           state.depth = 55;
+
           renderMotor();
+
           await wait(900);
 
+          // ==========================================
+          // ปล่อยกล่อง
+          // ==========================================
+
           rod.style.height = 260 + "px";
-          await wait(250);
+          await wait(250);          
           clawEl.classList.remove("closed");
           heldPrizeEl.classList.remove("show");
           dropIntoChute(caught);
@@ -596,7 +770,14 @@
           const chuteHole = document.getElementById("chuteHole");
           const el = document.createElement("div");
           el.className = "chute-prize";
-          const giftImg = createGiftImage({ width: 42, height: 42 });
+          
+          // 🟢 เติม src: box.image เข้าไปเพื่อให้ดึงรูปกล่องหล่นลงช่อง
+          const giftImg = createGiftImage({ 
+            width: 42, 
+            height: 42, 
+            src: box.image 
+          }); 
+          
           giftImg.style.filter = "drop-shadow(0 6px 6px rgba(0,0,0,0.3))";
           el.appendChild(giftImg);
           el.style.left = 18 + Math.random() * 34 + "%";
@@ -608,179 +789,193 @@
         }
 
         async function openBoxSequence(box) {
-          const overlay = document.getElementById("overlay");
-          const boxClosed = document.getElementById("boxClosed");
-          const revealEmoji = document.getElementById("revealEmoji");
-          const popTitle = document.getElementById("popTitle");
-          const popText = document.getElementById("popText");
-          const closeBtn = document.getElementById("popupClose");
-          const blueReveal = document.getElementById("blueReveal");
+            const overlay = document.getElementById("overlay");
+            const boxClosed = document.getElementById("boxClosed");
+            const revealEmoji = document.getElementById("revealEmoji");
+            const popTitle = document.getElementById("popTitle");
+            const popText = document.getElementById("popText");
+            const closeBtn = document.getElementById("popupClose");
+            const blueReveal = document.getElementById("blueReveal");
 
-          let finalPrize = getOrderedPrizeForTurn() || box.prize;
+            let finalPrize = getOrderedPrizeForTurn() || box.prize;
 
-          state.revealReady = false;
+            state.revealReady = false;
 
-          boxClosed.className = "giftbox-big";
-          boxClosed.style.display = "block";
-          boxClosed.style.opacity = "1";
-          boxClosed.style.background = "transparent";
+            // 1. ตั้งค่าสถานะเริ่มต้นของ Modal
+            // 1. ตั้งค่าสถานะเริ่มต้นของ Modal
+            boxClosed.className = "giftbox-big";
+            boxClosed.style.display = "block";
+            boxClosed.style.opacity = "1";
+            boxClosed.style.background = "transparent";
+            boxClosed.style.marginBottom = "24px"; // <-- เพิ่มระยะห่างด้านล่างกล่อง
 
-          boxClosed.innerHTML = "";
-          boxClosed.appendChild(createGiftImage({ width: 220, height: 220, src: REVEAL_IMAGE_PATH }));
-          revealEmoji.classList.remove("show", "bounce");
-          revealEmoji.textContent = "";
-          blueReveal.classList.remove("flash");
-          blueReveal.style.opacity = "0";
-          popTitle.textContent = "กำลังเปิดกล่อง...";
-          popText.textContent = "";
-          closeBtn.style.display = "none";
-          overlay.classList.add("show");
+            boxClosed.innerHTML = "";
+            boxClosed.appendChild(createGiftImage({ width: 300, height: 300, src: REVEAL_IMAGE_PATH }));
 
-          await wait(250);
+            revealEmoji.classList.remove("show", "bounce");
+            revealEmoji.textContent = "";
+            revealEmoji.style.marginTop = "20px"; // <-- รางวัลที่เฉลยก็ให้ห่างด้วย
 
-          playSound("gift");
-          blueReveal.style.opacity = "1";
-          blueReveal.style.transform = "scale(0.7)";
-          void blueReveal.offsetWidth;
-          blueReveal.classList.add("flash");
-          await wait(320);
+            blueReveal.classList.remove("flash");
+            blueReveal.style.opacity = "0";
 
-          boxClosed.style.display = "none";
-          blueReveal.style.opacity = "0";
+            // จัด Title ให้ห่างจากกล่อง
+            popTitle.textContent = "กำลังเปิดกล่อง...";
+            popTitle.style.marginTop = "24px"; // <-- ตรงนี้เลยครับ ที่คุณขอ
+            popTitle.style.marginBottom = "8px";
+            popTitle.style.display = "block";
 
-          popTitle.textContent = "✨ กำลังเปิดรางวัล...";
-          await wait(280);
+            popText.textContent = "";
+            closeBtn.style.display = "none";
+            overlay.classList.add("show");
 
-          // คำนวณรางวัลพิเศษตามรอบการหมุน
-          let specialPrizeName = "";
-          if (dbTotalSpins % 5 === 0) {
-            specialPrizeName = 'แลคตาซอย';
-          } else if (dbTotalSpins % 2 === 1) {
-            specialPrizeName = 'ไดนาไมท์';
-          } else {
-            specialPrizeName = 'ดิวเบอร์รี่';
-          }
+            // 2. หน่วงเวลาจังหวะแรกก่อนเริ่มเล่นเอฟเฟกต์
+            await wait(500);
 
-          revealEmoji.innerHTML = `<img src="${finalPrize.image}" style="width: 200px; height: 200px; object-fit: contain;">`;
-          revealEmoji.classList.add("show");
-          void revealEmoji.offsetWidth;
-          revealEmoji.classList.add("bounce");
+            playSound("gift");
+            blueReveal.style.opacity = "1";
+            blueReveal.style.transform = "scale(0.7)";
+            void blueReveal.offsetWidth;
+            blueReveal.classList.add("flash");
+            await wait(600);
 
-          state.stars += 5;
-          state.gift += 1;
-          updateHUD();
+            boxClosed.style.display = "none";
+            blueReveal.style.opacity = "0";
 
-          // สร้าง HTML สำหรับรางวัลพิเศษ
-          let specialPrizeHTML = '';
-          let specialPrizeImage = '';
+            popTitle.textContent = "✨ กำลังเปิดรางวัล...";
+            popTitle.style.marginTop = "32px"; // <-- ตอนเปิดรางวัล ให้ห่างอีกนิด จะเด่นขึ้น
+            await wait(600);
 
-          if (specialPrizeName === "แลคตาซอย") {
-            specialPrizeImage = "sponsors/lactasoy.png";
-          } else if (specialPrizeName === "ดิวเบอร์รี่") {
-            specialPrizeImage = "sponsors/blueberry.png";
-          } else {
-            specialPrizeImage = "sponsors/dynamite.png";
-          }
-
-          if (specialPrizeImage) { 
-            specialPrizeHTML = ` 
-                <div style="
-                    margin-top:15px; 
-                    background:#f9f9f9; 
-                    padding:20px; 
-                    border-radius:15px; 
-                    border:2px solid #f1c40f;
-                    font-family:'Kanit', sans-serif;
-                "> 
-
-                    <p style="
-                        margin:0 0 10px 0; 
-                        color:#34495e; 
-                        font-weight:700; 
-                        font-size:24px;
-                        font-family:'Kanit', sans-serif;
-                    ">
-                        ✨ รับเพิ่ม! รางวัลพิเศษ ✨
-                    </p> 
-
-                    <img 
-                        src="${specialPrizeImage}" 
-                        style="
-                            width:300px; 
-                            height:300px; 
-                            object-fit:contain;
-                        "
-                    > 
-
-                </div> 
-            `; 
-          }
-
-          // ดึงชื่อผู้เล่นปัจจุบัน
-          const currentPlayer = getCurrentPlayerName() || "ผู้เล่น";
-
-          popTitle.textContent = "🎉 ยินดีด้วย!";
-          popTitle.style.fontFamily = "'Kanit', sans-serif";
-          popTitle.style.fontWeight = "700";
-
-          // แสดงชื่อผู้เล่นพร้อมรางวัลที่ได้รับ
-          popText.innerHTML = `
-              <div style="
-                  font-family: 'Kanit', sans-serif;
-                  font-weight: 700;
-                  font-size: 44px;
-                  color: #2c3e50;
-                  margin-bottom: 8px;
-              ">
-                  คุณ ${currentPlayer}
-              </div>
-              <div style="
-                  font-family: 'Kanit', sans-serif;
-                  font-weight: 700;
-                  font-size: 28px;
-                  color: #e67e22;
-              ">
-                  ได้รับ ${finalPrize.name}! (+5 ⭐)
-              </div>
-              ${specialPrizeHTML}
-          `;
-
-          closeBtn.style.display = "inline-block";
-
-          state.revealReady = true;
-
-          // ตัดสต็อกและเพิ่มจำนวนการเล่นสะสม
-          db.ref('currentStock/' + finalPrize.name).transaction((current) => (current || 0) - 1);
-          db.ref('totalSpins').transaction((count) => (count || 0) + 1);
-
-          // --- บันทึกประวัติการได้รับรางวัลลง Firebase ---
-          const now = new Date();
-          const timestampStr = now.toLocaleString('th-TH', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-          });
-
-          db.ref('history').push({
-            orderNo: (dbTotalSpins || 0) + 1,
-            playerName: currentPlayer,
-            prize: finalPrize.name,
-            specialPrize: specialPrizeName || "-",
-            datetime: timestampStr,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-          });
-          // ------------------------------------------
-
-          setTimeout(() => {
-            if (phase === "revealing" && state.revealReady) {
-              closeRevealAndRestart();
+            // 3. คำนวณรางวัลพิเศษตามรอบการหมุน
+            let specialPrizeName = "";
+            if (dbTotalSpins % 5 === 0) {
+              specialPrizeName = 'แลคตาซอย';
+            } else if (dbTotalSpins % 2 === 1) {
+              specialPrizeName = 'ไดนาไมท์';
+            } else {
+              specialPrizeName = 'ดิวเบอร์รี่';
             }
-          }, 15000);
-        }
+
+            // แสดงรูปภาพรางวัลหลัก
+            revealEmoji.innerHTML = `<img src="${finalPrize.image}" style="width: 200px; height: 200px; object-fit: contain;">`;
+            revealEmoji.classList.add("show");
+            void revealEmoji.offsetWidth;
+            revealEmoji.classList.add("bounce");
+
+            state.stars += 5;
+            state.gift += 1;
+            updateHUD();
+
+            // สร้าง HTML สำหรับรางวัลพิเศษ
+            let specialPrizeHTML = '';
+            let specialPrizeImage = '';
+
+            if (specialPrizeName === "แลคตาซอย") {
+              specialPrizeImage = "sponsors/lactasoy.png";
+            } else if (specialPrizeName === "ดิวเบอร์รี่") {
+              specialPrizeImage = "sponsors/blueberry.png";
+            } else {
+              specialPrizeImage = "sponsors/dynamite.png";
+            }
+
+            if (specialPrizeImage) { 
+              specialPrizeHTML = ` 
+                  <div style="
+                      margin-top:15px; 
+                      background:#f9f9f9; 
+                      padding:20px; 
+                      border-radius:15px; 
+                      border:2px solid #f1c40f;
+                      font-family:'Kanit', sans-serif;
+                  "> 
+                      <p style="
+                          margin:0 0 10px 0; 
+                          color:#34495e; 
+                          font-weight:700; 
+                          font-size:24px;
+                          font-family:'Kanit', sans-serif;
+                      ">
+                          ✨ รับเพิ่ม! รางวัลพิเศษ ✨
+                      </p> 
+                      <img 
+                          src="${specialPrizeImage}" 
+                          style="
+                              width:300px; 
+                              height:300px; 
+                              object-fit:contain;
+                          "
+                      > 
+                  </div> 
+              `; 
+            }
+
+            const currentPlayer = getCurrentPlayerName() || "ผู้เล่น";
+
+            popTitle.textContent = "🎉 ยินดีด้วย!";
+            popTitle.style.fontFamily = "'Kanit', sans-serif";
+            popTitle.style.fontWeight = "700";
+
+            popText.innerHTML = `
+                <div style="
+                    font-family: 'Kanit', sans-serif;
+                    font-weight: 700;
+                    font-size: 44px;
+                    color: #2c3e50;
+                    margin-bottom: 8px;
+                ">
+                    คุณ ${currentPlayer}
+                </div>
+                <div style="
+                    font-family: 'Kanit', sans-serif;
+                    font-weight: 700;
+                    font-size: 28px;
+                    color: #e67e22;
+                ">
+                    ได้รับ ${finalPrize.name}! (+5 ⭐)
+                </div>
+                ${specialPrizeHTML}
+            `;
+
+            closeBtn.style.display = "inline-block";
+            state.revealReady = true;
+
+            // 4. สลับตำแหน่งกล่องที่เหลือบนฉากหลังทันทีที่เปิดป๊อบอัพเสร็จ
+            if (typeof shuffleRemainingBoxes === "function") {
+              shuffleRemainingBoxes();
+            }
+
+            // 5. ตัดสต็อกและเพิ่มจำนวนการเล่นสะสม Firebase
+            db.ref('currentStock/' + finalPrize.name).transaction((current) => (current || 0) - 1);
+            db.ref('totalSpins').transaction((count) => (count || 0) + 1);
+
+            // บันทึกประวัติ
+            const now = new Date();
+            const timestampStr = now.toLocaleString('th-TH', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false
+            });
+
+            db.ref('history').push({
+              orderNo: (dbTotalSpins || 0) + 1,
+              playerName: currentPlayer,
+              prize: finalPrize.name,
+              specialPrize: specialPrizeName || "-",
+              datetime: timestampStr,
+              timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            // Auto Close หลังผ่านไป 15 วินาที
+            setTimeout(() => {
+              if (phase === "revealing" && state.revealReady) {
+                closeRevealAndRestart();
+              }
+            }, 15000);
+          }
 
         document.getElementById("popupClose").addEventListener("click", () => {
           if (phase === "revealing" && state.revealReady) {

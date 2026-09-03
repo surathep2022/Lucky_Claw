@@ -1039,9 +1039,7 @@
         width: 180px;
         height: 154px;
         border-radius: 18px;
-        box-shadow:
-          0 16px 20px rgba(0, 0, 0, 0.35),
-          inset 0 -10px 0 rgba(0, 0, 0, 0.18);
+     
         transition:
           transform 0.5s ease,
           opacity 0.5s ease;
@@ -1186,4 +1184,14 @@
         text-align: center;
         z-index: 20;
       }
-  
+      
+      /* กำหนดฟอนต์ Kanit ให้กับองค์ประกอบทั้งหมดภายใน Overlay และ Popup */
+      #overlay,
+      #popup,
+      #popTitle,
+      #popText,
+      #popupClose,
+      .reveal-wrap {
+        font-family: 'Kanit', sans-serif !important;
+      }
+
