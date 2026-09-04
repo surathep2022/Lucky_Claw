@@ -49,35 +49,15 @@
       }
 
       /* ---------- background arcade room ---------- */
-      #room {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            ellipse at 15% 20%,
-            rgba(255, 45, 135, 0.18),
-            transparent 45%
-          ),
-          radial-gradient(
-            ellipse at 85% 25%,
-            rgba(53, 224, 255, 0.15),
-            transparent 45%
-          ),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.02) 0 2px,
-            transparent 2px 140px
-          );
-      }
-      #floor {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 340px;
-        background: linear-gradient(180deg, #2b1140, #150826);
-        box-shadow: inset 0 20px 60px rgba(53, 224, 255, 0.08);
-      }
+     #room {
+  position: absolute;
+  inset: 0;
+  /* เปลี่ยนจาก radial-gradient เป็นรูปภาพ */
+  background: url('BG.jpg') no-repeat center center / cover !important;
+}
+     #floor {
+  display: none !important; /* ซ่อนเลเยอร์พื้นเพื่อไม่ให้บังรูป BG.jpg ด้านล่าง */
+}
 
       /* ---------- HUD top left ---------- */
       #hud-left {
@@ -1196,47 +1176,4 @@
       }
 
 
-
-      /* Container รวมของ Sponsor */
-.sponsor-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-  width: 100%;
-}
-
-/* หัวข้อ Sponsored by */
-.sponsor-title {
-  color: #ffffffd0;
-  font-family: "Kanit", sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* แถวเรียง โลโก้ทั้ง 3 ภาพ */
-.sponsor-logos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap; /* ป้องกันภาพล้นหน้าจอขนาดเล็ก */
-}
-
-/* ควบคุมขนาดโลโก้ให้สวยงาม */
-.sponsor-logos img {
-  height: 60px;          /* ปรับความสูงได้ตามต้องการ */
-  width: auto;           /* ปรับความกว้างตามสัดส่วนภาพอัตโนมัติ */
-  object-fit: contain;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-  transition: transform 0.2s ease;
-}
-
-.sponsor-logos img:hover {
-  transform: scale(1.08); /* ลูกเล่นขยายเล็กน้อยเมื่อ Hover */
-}
+     
