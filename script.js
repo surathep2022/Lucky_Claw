@@ -56,7 +56,28 @@
         function updateCurrentPlayerBadge() {
           const badge = document.getElementById('player-name-display');
           if (!badge) return;
-          badge.textContent = getCurrentPlayerName();
+          
+          // ดึงชื่อผู้เล่น แล้วนำมาผ่านฟังก์ชัน formatDisplayName ก่อนแสดงผล
+            const rawName = getCurrentPlayerName();
+            badge.textContent = formatDisplayName(rawName);
+        }
+
+        function formatDisplayName(fullName) {
+          // 1. เช็กค่าว่าง หรือไม่ใช่ string
+          if (!fullName || typeof fullName !== 'string') return "ไม่ระบุชื่อ";
+          
+          // 2. ตัดช่องว่างหน้า-หลัง และใช้ regex Split ด้วย \s+ เพื่อป้องกันช่องว่างติดกันหลายตัว
+          const cleanName = fullName.trim();
+          if (!cleanName) return "ไม่ระบุชื่อ";
+          
+          let firstName = cleanName.split(/\s+/)[0]; 
+        
+          // 3. ถ้ายาวเกิน 10 ตัวอักษร ให้ตัดเหลือ 10 แล้วต่อด้วย xxxxxx
+          if (firstName.length > 10) {
+              firstName = firstName.substring(0, 10) + "xxxxxx";
+          }
+          
+          return firstName;
         }
 
         function getOrderedPrizeForTurn() {
@@ -95,7 +116,7 @@
 
         // ---------------- gift box + surprise toy data ----------------
         const prizes = [          
-            { name: "ร่มตอนเดียว", image: "gift/1.png" },  
+            { name: "ร่มพับ", image: "gift/1.png" },  
             { name: "กระเป๋าช้อปปิ้ง", image: "gift/5.png" },
             { name: "กระเป๋าลายสัตว์", image: "gift/21.png" },
             { name: "แก้วเก็บความเย็น", image: "gift/20.png" },
@@ -857,7 +878,7 @@
             }
 
             // แสดงรูปภาพรางวัลหลัก
-            revealEmoji.innerHTML = `<img src="${finalPrize.image}" style="width: 200px; height: 200px; object-fit: contain;">`;
+            revealEmoji.innerHTML = `<img src="${finalPrize.image}" style="width: 400px; height: 400px; object-fit: contain;">`;
             revealEmoji.classList.add("show");
             void revealEmoji.offsetWidth;
             revealEmoji.classList.add("bounce");

@@ -135,16 +135,18 @@
       }
 
       /* ---------- timer ---------- */
+      /* ---------- timer (ชิดซ้าย) ---------- */
       #timer-wrap {
         position: absolute;
         top: 30px;
-        left: 250px;
+        left: 30px; /* ปรับลดจาก 250px เพื่อให้ขยับมาชิดซ้าย */
         z-index: 31;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 4px;
       }
+
       #timer-badge {
         font-family: "Baloo 2";
         font-weight: 800;
@@ -162,21 +164,25 @@
           0 0 26px rgba(255, 210, 63, 0.55),
           0 6px 0 rgba(0, 0, 0, 0.35);
       }
+
       #timer-badge.warn {
         color: #ff5b5b;
         border-color: #ff5b5b;
       }
+
       #timer-label {
         color: var(--gold);
         font-size: 20px;
         font-weight: 700;
         letter-spacing: 1px;
       }
+
+      /* ---------- current player (ตรงกลาง) ---------- */
       #current-player-pill {
         position: absolute;
         top: 30px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 50%; /* ยึดจุดเริ่มต้นที่ตรงกลาง */
+        transform: translateX(-50%); /* ดึงตัวกล่องกลับมาครึ่งหนึ่งเพื่อให้กึ่งกลางเป๊ะ */
         z-index: 31;
         display: flex;
         flex-direction: column;
@@ -195,17 +201,20 @@
         text-align: center;
         height: 110px;
       }
+
       .player-label {
         color: #ffd76a;
         font-size: 44px;
         font-weight: 900;  
         text-transform: uppercase;
       }         
+
       #player-name-display {
         color: #fff;
         font-size: 55px;
         font-weight: 900;
-        line-height: 1;
+        height: 80px; /* เพิ่มความสูงของกล่องตามต้องการ (เช่น 70px - 90px) */
+        line-height: 80px; /* ปรับให้เท่ากับ height เพื่อจัดข้อความให้อยู่ตรงกลางแนวตั้ง */
         width: 100%;
         max-width: 100%;
         white-space: nowrap;
