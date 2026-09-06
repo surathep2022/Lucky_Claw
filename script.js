@@ -122,14 +122,14 @@
             { name: "แก้วเก็บความเย็น", image: "gift/20.png" },
             { name: "แก้วน้ำปาร์ตี้", image: "gift/11.png" },
             
-            { name: "เครื่องผลไม้ปั่น", image: "gift/15.png" }, 
+            // { name: "เครื่องผลไม้ปั่น", image: "gift/15.png" }, 
             { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
-            { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
-            { name: "เครื่องจำกัดไรฝุ่น", image: "gift/18.png"},
-            { name: "เครื่องบดเนื้อ", image: "gift/19.png" },
-            { name: "เครื่องเตรียมอาหาร", image: "gift/12.png" },
-            { name: "หม้อทอดไร้น้ำมัน", image: "gift/16.png" },
-            { name: "เครื่องดูดฝุ่น", image: "gift/13.png" },   
+            // { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
+            // { name: "เครื่องจำกัดไรฝุ่น", image: "gift/18.png"},
+            // { name: "เครื่องบดเนื้อ", image: "gift/19.png" },
+            // { name: "เครื่องเตรียมอาหาร", image: "gift/12.png" },
+            // { name: "หม้อทอดไร้น้ำมัน", image: "gift/16.png" },
+            // { name: "เครื่องดูดฝุ่น", image: "gift/13.png" },   
         ];
 
         const BOX_COLORS = ["black", "blue", "gold", "mint", "pink", "red", "bright_blue", "rainbow", "white"];
@@ -944,7 +944,7 @@
                     color: #2c3e50;
                     margin-bottom: 8px;
                 ">
-                    คุณ ${currentPlayer}
+                    คุณ ${formatDisplayName(currentPlayer)}!
                 </div>
                 <div style="
                     font-family: 'Kanit', sans-serif;
