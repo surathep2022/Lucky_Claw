@@ -445,7 +445,8 @@
         top: 56px;
         left: 50%;
         width: 8px;
-        height: 30px;
+        /* ใช้ค่าความสูงจากตัวแปร --drop-depth ถ้าไม่มีให้ใช้ค่าเริ่มต้น 300px */
+        height: var(--drop-depth, 300px); 
         margin-left: -4px;
         background: linear-gradient(180deg, #dfe3ea, #9aa0ad);
         transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);

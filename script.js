@@ -385,53 +385,47 @@
         renderMotor();
         updateHUD();
 
-        function findNearestGiftToClaw() {
-          const clawRect = clawEl.getBoundingClientRect();
-          const clawY = clawRect.top + clawRect.height / 2;
+        function setRandomClawDepth() {
+          const rod = document.getElementById('rod');
+          if (!rod) return;
 
-          let candidateBoxes = [];
+          // กำหนดระดับความยาว 3 ระดับ (px): [สั้น, กลาง, ยาว]
+          const levels = [550, 750, 950]; 
 
-          prizeElements.forEach((p) => {
-            if (!p.el) return;
-            if (p.el.style.opacity === "0") return; // ข้ามกล่องที่คีบไปแล้ว
+          // สุ่มเลือก 1 ระดับจากใน Array
+          const randomDepth = levels[Math.floor(Math.random() * levels.length)];
 
-            const boxRect = p.el.getBoundingClientRect();
-            const boxY = boxRect.top + boxRect.height / 2;
+          // ส่งค่าไปที่ CSS Variable --drop-depth
+          rod.style.setProperty('--drop-depth', `${randomDepth}px`);
+        }
 
-            // 1. คำนวณระยะห่างแกน X เป็น % จากตำแหน่งของรางคีบกับตัวกล่องโดยตรง
+                function findNearestGiftToClaw() {
+          if (prizeElements.length === 0) return null;
+
+          // กรองเอาเฉพาะกล่องที่ยังไม่ถูกคีบ (ยังไม่ซ่อน)
+          const availableBoxes = prizeElements.filter((p) => p.el && p.el.style.opacity !== "0");
+          if (availableBoxes.length === 0) return null;
+
+          // 🎯 ปรับให้ค้นหากล่องที่อยู่ใกล้ตำแหน่ง X ของหัวคีบที่สุดเสมอ
+          let nearestBox = null;
+          let minDistanceX = Infinity;
+
+          availableBoxes.forEach((p) => {
             const dxPct = Math.abs(state.clawXPct - p.x);
-
-            // 2. เช็กว่าหัวคีบเล็งตรงกล่อง (ไม่เกิน 12%) และหย่อนลงมาถึงระดับความสูงของกล่องนั้นแล้ว
-            if (dxPct <= 12 && boxY <= clawY + 50) {
-              candidateBoxes.push({
-                prize: p,
-                dxPct: dxPct,
-                y: p.y
-              });
+            if (dxPct < minDistanceX) {
+              minDistanceX = dxPct;
+              nearestBox = p;
             }
           });
-
-          if (candidateBoxes.length === 0) return null;
-
-          // 🎯 ปรับ Logic: เรียงจาก y มากไปน้อย (b.y - a.y)
-          // หากหัวคีบหย่อนลงมาถึงแถวกลาง (y: 45) จะเลือกกล่องแถวกลางแทนกล่องแถวบน (y: 10) ทันที
-          candidateBoxes.sort((a, b) => {
-            if (a.y !== b.y) {
-              return b.y - a.y; // เลือกกล่องที่อยู่ลึกที่สุดที่หัวคีบหย่อนลงไปถึง
-            }
-            return a.dxPct - b.dxPct; // ถ้าอยู่แถวเดียวกัน ให้เลือกกล่องที่ตรงกลางที่สุด
-          });
-
-          const nearest = candidateBoxes[0].prize;
 
           console.log(
-            "🎯 คีบสำเร็จ (เลือกกล่องลึกสุดที่ลงไปถึง):",
-            nearest?.color,
-            "พิกัด Y:",
-            nearest?.y
+            "🎯 คีบสำเร็จแน่นอน 100% (เลือกกล่องที่ใกล้ที่สุด):",
+            nearestBox?.color,
+            "พิกัด X:",
+            nearestBox?.x
           );
 
-          return nearest;
+          return nearestBox;
         }
 
         // ---------------- phase state machine ----------------
@@ -657,17 +651,20 @@
           stopTimer();
           setHint("กำลังคีบกล่องของขวัญ...");
 
-          state.credit -= 1;
-          updateHUD();
-          
-          // ตำแหน่งหัวคีบ
-          const reachX = state.clawXPct;
-          const reachY = 25 + (state.depth / 100) * 60;
-          
-          // หัวคีบลงไปด้านล่าง
-          rod.style.height = ROD_MAX + "px";
+          // 🟢 โค้ดที่ปรับใหม่ (ใช้ข้อ 4)
+state.credit -= 1;
+updateHUD();
 
-          await wait(600);
+// 1. สุ่มความยาวสายคีบใหม่สำหรับรอบนี้
+setRandomClawDepth();
+
+// 2. ดึงค่าความยาวที่สุ่มได้จาก CSS Variable
+const targetDepth = rod.style.getPropertyValue('--drop-depth') || (ROD_MAX + "px");
+
+// 3. สั่งให้สายคีบยืดลงตามความยาวที่สุ่มได้
+rod.style.height = targetDepth;
+
+await wait(600);
 
           // ==========================================
           
