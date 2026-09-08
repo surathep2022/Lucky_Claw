@@ -11,10 +11,18 @@ const prizes = [
     { name: "กระเป๋าลายสัตว์", image: "gift/21.png" },
     { name: "แก้วเก็บความเย็น", image: "gift/20.png" },
     { name: "แก้วน้ำปาร์ตี้", image: "gift/11.png" },
+    { name: "ชุดถนอมอาหาร", image: "gift/7.png" },
+    { name: "กระบอกน้ำพลาสติค", image: "gift/6.png" },
+    { name: "ถุงผ้าเก็บของ", image: "gift/10.png" }, 
+
+    { name: "แลกตาซอย" , image: "sponsors/lactasoy.png" },
+    { name: "ดิวเบอร์ลี่" , image: "sponsors/blueberry.png" },
+    { name: "ไดนาไมท์" , image: "sponsors/dynamite.png" },
+
     
     // { name: "เครื่องผลไม้ปั่น", image: "gift/15.png" }, 
-    { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
-    // { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
+    // { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
+    { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
     // { name: "เครื่องจำกัดไรฝุ่น", image: "gift/18.png"},
     // { name: "เครื่องบดเนื้อ", image: "gift/19.png" },
     // { name: "เครื่องเตรียมอาหาร", image: "gift/12.png" },
@@ -28,8 +36,7 @@ const prizes = [
     // { name: "กระบอกน้ำ", image: "gift/6.png" },
     // { name: "ชุดถนอมอาหาร", image: "gift/7.png" },
     // { name: "กระบอกแก้ว", image: "gift/8.png" },
-    // { name: "กล่องผ้าเก็บของ", image: "gift/9.png" },
-    // { name: "ถุงผ้าเก็บของ", image: "gift/10.png" }, 
+    // { name: "กล่องผ้าเก็บของ", image: "gift/9.png" },   
 
 ];
 
@@ -491,6 +498,7 @@ function saveInventoryStock() {
         Swal.fire('ผิดพลาด', 'บันทึกสต็อกไม่สำเร็จ', 'error');
     });
 }
+
 
 function savePrizeOrder() {
     const selectedCounts = getSelectedCounts();

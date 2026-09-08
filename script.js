@@ -121,15 +121,25 @@
             { name: "กระเป๋าลายสัตว์", image: "gift/21.png" },
             { name: "แก้วเก็บความเย็น", image: "gift/20.png" },
             { name: "แก้วน้ำปาร์ตี้", image: "gift/11.png" },
+            { name: "ชุดถนอมอาหาร", image: "gift/7.png" },
+            { name: "กระบอกน้ำพลาสติค", image: "gift/6.png" },
+            { name: "ถุงผ้าเก็บของ", image: "gift/10.png" },
             
+
+            { name: "แลกตาซอย" , image: "sponsors/lactasoy.png" },
+            { name: "ดิวเบอร์ลี่" , image: "sponsors/blueberry.png" },
+            { name: "ไดนาไมท์" , image: "sponsors/dynamite.png" },
+
             // { name: "เครื่องผลไม้ปั่น", image: "gift/15.png" }, 
-            { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
-            // { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
+            // { name: "เครื่องปั้นน้ำผลไม้", image: "gift/14.png" },
+            { name: "เครื่องพ่นไอน้ำ" , image: "gift/17.png" },
             // { name: "เครื่องจำกัดไรฝุ่น", image: "gift/18.png"},
             // { name: "เครื่องบดเนื้อ", image: "gift/19.png" },
             // { name: "เครื่องเตรียมอาหาร", image: "gift/12.png" },
             // { name: "หม้อทอดไร้น้ำมัน", image: "gift/16.png" },
-            // { name: "เครื่องดูดฝุ่น", image: "gift/13.png" },   
+            // { name: "เครื่องดูดฝุ่น", image: "gift/13.png" },  
+            
+            
         ];
 
         const BOX_COLORS = ["black", "blue", "gold", "mint", "pink", "red", "bright_blue", "rainbow", "white"];
@@ -385,48 +395,69 @@
         renderMotor();
         updateHUD();
 
-        function setRandomClawDepth() {
-          const rod = document.getElementById('rod');
-          if (!rod) return;
+       
+        // ตัวแปรนับลำดับรอบ (ใส่ไว้ด้านนอกฟังก์ชัน)
+          let clawDepthIndex = 0; 
 
-          // กำหนดระดับความยาว 3 ระดับ (px): [สั้น, กลาง, ยาว]
-          const levels = [550, 750, 950]; 
+          function setRandomClawDepth() {
+                const rod = document.getElementById('rod');
+                if (!rod) return;
 
-          // สุ่มเลือก 1 ระดับจากใน Array
-          const randomDepth = levels[Math.floor(Math.random() * levels.length)];
+                // กำหนดระดับความยาว 3 ระดับ (px): [สั้น (แถวบน), กลาง (แถวกลาง), ยาว (แถวล่าง)]
+                  const levels = [550, 750, 950]; 
 
-          // ส่งค่าไปที่ CSS Variable --drop-depth
-          rod.style.setProperty('--drop-depth', `${randomDepth}px`);
-        }
+                // ดึงค่าตามลำดับปัจจุบัน
+                const currentDepth = levels[clawDepthIndex];
 
-                function findNearestGiftToClaw() {
-          if (prizeElements.length === 0) return null;
+                // ส่งค่าไปที่ CSS Variable --drop-depth
+                rod.style.setProperty('--drop-depth', `${currentDepth}px`);
 
-          // กรองเอาเฉพาะกล่องที่ยังไม่ถูกคีบ (ยังไม่ซ่อน)
-          const availableBoxes = prizeElements.filter((p) => p.el && p.el.style.opacity !== "0");
-          if (availableBoxes.length === 0) return null;
+                // วนลำดับ 0 -> 1 -> 2 -> 0 -> 1 -> 2 ไปเรื่อยๆ
+                clawDepthIndex = (clawDepthIndex + 1) % levels.length;
+          }
+        
 
-          // 🎯 ปรับให้ค้นหากล่องที่อยู่ใกล้ตำแหน่ง X ของหัวคีบที่สุดเสมอ
-          let nearestBox = null;
-          let minDistanceX = Infinity;
+          function findNearestGiftToClaw() {
+            if (prizeElements.length === 0) return null;
 
-          availableBoxes.forEach((p) => {
-            const dxPct = Math.abs(state.clawXPct - p.x);
-            if (dxPct < minDistanceX) {
-              minDistanceX = dxPct;
-              nearestBox = p;
-            }
-          });
+            // กรองเอาเฉพาะกล่องที่ยังไม่ถูกคีบไป
+            const availableBoxes = prizeElements.filter((p) => p.el && p.el.style.opacity !== "0");
+            if (availableBoxes.length === 0) return null;
 
-          console.log(
-            "🎯 คีบสำเร็จแน่นอน 100% (เลือกกล่องที่ใกล้ที่สุด):",
-            nearestBox?.color,
-            "พิกัด X:",
-            nearestBox?.x
-          );
+            // ดึงพิกัดจริงของหัวคีบ ณ จุดปัจจุบัน (จุดที่ยืดลงไปสุด)
+            const clawRect = clawEl.getBoundingClientRect();
+            const clawCenterX = clawRect.left + clawRect.width / 2;
+            const clawCenterY = clawRect.top + clawRect.height / 2;
 
-          return nearestBox;
-        }
+            let nearestBox = null;
+            let minDistance = Infinity;
+
+            // คำนวณระยะทางจากหัวคีบไปยังกล่องแต่ละใบ
+            availableBoxes.forEach((p) => {
+              const boxRect = p.el.getBoundingClientRect();
+              const boxCenterX = boxRect.left + boxRect.width / 2;
+              const boxCenterY = boxRect.top + boxRect.height / 2;
+
+              // คำนวณระยะห่างตรงระหว่าง 2 จุด (Pythagorean distance)
+              const dx = clawCenterX - boxCenterX;
+              const dy = clawCenterY - boxCenterY;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance < minDistance) {
+                minDistance = distance;
+                nearestBox = p;
+              }
+            });
+
+            console.log(
+              "🎯 คีบสำเร็จ (กล่องที่ใกล้หัวคีบที่สุด ณ จุดลงสุด):",
+              nearestBox?.color,
+              "ระยะห่าง:",
+              Math.round(minDistance) + "px"
+            );
+
+            return nearestBox;
+          }
 
         // ---------------- phase state machine ----------------
         let phase = "locked";
@@ -652,19 +683,19 @@
           setHint("กำลังคีบกล่องของขวัญ...");
 
           // 🟢 โค้ดที่ปรับใหม่ (ใช้ข้อ 4)
-state.credit -= 1;
-updateHUD();
+          state.credit -= 1;
+          updateHUD();
 
-// 1. สุ่มความยาวสายคีบใหม่สำหรับรอบนี้
-setRandomClawDepth();
+          // 1. สุ่มความยาวสายคีบใหม่สำหรับรอบนี้
+          setRandomClawDepth();
 
-// 2. ดึงค่าความยาวที่สุ่มได้จาก CSS Variable
-const targetDepth = rod.style.getPropertyValue('--drop-depth') || (ROD_MAX + "px");
+          // 2. ดึงค่าความยาวที่สุ่มได้จาก CSS Variable
+          const targetDepth = rod.style.getPropertyValue('--drop-depth') || (ROD_MAX + "px");
 
-// 3. สั่งให้สายคีบยืดลงตามความยาวที่สุ่มได้
-rod.style.height = targetDepth;
+          // 3. สั่งให้สายคีบยืดลงตามความยาวที่สุ่มได้
+          rod.style.height = targetDepth;
 
-await wait(600);
+          await wait(600);
 
           // ==========================================
           
