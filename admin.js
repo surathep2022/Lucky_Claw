@@ -183,7 +183,7 @@ function updateDashboard() {
         });
     }
     document.getElementById('total-left-display').textContent = totalLeft;
-   // อัปเดตจำนวนคงเหลือของผู้สนับสนุน (Lactasoy 20 / Lush 40 / Dewberry 40)
+   // อัปเดตจำนวนคงเหลือของผู้สนับสนุน (Lactasoy 25 / dynamite 15 / Dewberry 60)
    
     const stockDynamite = document.getElementById('stock-dynamite');
     const stockLactasoy = document.getElementById('stock-lactasoy');
@@ -211,13 +211,13 @@ function updateDashboard() {
 
     // จำกัดขีดจำกัดสูงสุดเพื่อความปลอดภัยไม่ให้ค่าติดลบ
     lactasoyGiven = Math.min(25, lactasoyGiven);
-    dynamiteGiven = Math.min(40, dynamiteGiven);
-    blueberryGiven = Math.min(35, blueberryGiven);
+    dynamiteGiven = Math.min(15, dynamiteGiven);
+    blueberryGiven = Math.min(60, blueberryGiven);
    
     // อัปเดตตัวเลขคงเหลือแสดงผลบนหน้าจอ Admin Dashboard
     if (stockLactasoy) stockLactasoy.textContent = 25 - lactasoyGiven;
-    if (stockDynamite) stockDynamite.textContent = 40 - dynamiteGiven;
-    if (stockBlueberry) stockBlueberry.textContent = 35 - blueberryGiven;
+    if (stockDynamite) stockDynamite.textContent = 15 - dynamiteGiven;
+    if (stockBlueberry) stockBlueberry.textContent = 60 - blueberryGiven;
 
     // อัปเดตคิวลูกค้า
     const queueDiv = document.getElementById('current-queue-list');
